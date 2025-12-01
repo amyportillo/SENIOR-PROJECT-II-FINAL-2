@@ -1,0 +1,21 @@
+{
+  "name": "cs480",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev:backend": "npm run dev --prefix backend",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "start:frontend": "npm start --prefix frontend",
+    "start:backend": "npm start --prefix backend",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
