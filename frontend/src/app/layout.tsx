@@ -3,11 +3,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 
+// metadata for the browser tab
 export const metadata: Metadata = {
-  title: "CS480 - Elmer F",
-  description: "Product Management Application for CS480",
+  title: "CS480 - Amy P",
 };
 
+// root layout that wraps every page in the app
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -16,7 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
+        {/* navbar shows on every page */}
         <Navbar />
+        {/* actual page content goes here */}
         {children}
       </body>
     </html>

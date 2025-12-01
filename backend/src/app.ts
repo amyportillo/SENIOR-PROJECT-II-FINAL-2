@@ -3,15 +3,18 @@ import cors from "cors";
 import config from "./config";
 import productRoutes from "./routes/productRoutes";
 import { initializeDatabase } from "./db";
-import "./models/index"; // Import models to register them with Sequelize
+import "./models/index"; // import models so sequelize knows about them
 
+// create the express app
 const app = express();
 
+// allow frontend to talk to backend from different port
 const allowedOrigins = ["http://localhost:3000", config.clientUrl];
 app.use(
   cors({
     origin: function (origin, callback) {
       console.log("Incoming origin:", origin);
+      // check if request is from allowed origin
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
@@ -23,6 +26,7 @@ app.use(
   })
 );
 
+// additional cors config for specific methods
 app.use(
   cors({
     origin: [config.clientUrl],
@@ -30,11 +34,14 @@ app.use(
     credentials: true,
   })
 );
+// parse json request bodies
 app.use(express.json());
+// serve uploaded images as static files
 app.use("/uploads", express.static("uploads"));
+// attach product routes
 app.use("/", productRoutes);
 
-// Initialize database then start server
+// connect to database first, then start listening for requests
 initializeDatabase()
   .then(() => {
     app.listen(config.port, () => {

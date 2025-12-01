@@ -1,11 +1,12 @@
 import { Sequelize } from "sequelize";
 import { Product } from "./models/Product";
 
+// create sequelize connection to mysql using connection string from env file
 const sequelize = new Sequelize(process.env.DATABASE_URL!, {
-  logging: false, // Set to console.log to see SQL queries
+  logging: false, // set to console.log if you want to see sql queries
 });
 
-// Test database connection
+// make sure we can actually connect to the database
 async function testConnection() {
   try {
     await sequelize.authenticate();
@@ -16,10 +17,11 @@ async function testConnection() {
   }
 }
 
-// Seed initial products
+// add some sample products if database is empty
 async function seedProducts() {
   try {
     const count = await Product.count();
+    // only seed if there are no products yet
     if (count === 0) {
       await Product.bulkCreate([
         {
@@ -70,11 +72,12 @@ async function seedProducts() {
   }
 }
 
-// Initialize database - sync all models
+// set up database tables and add sample data
 async function initializeDatabase() {
   try {
     await testConnection();
-    await sequelize.sync({ alter: true });
+    // force: true drops and recreates tables (clean slate each time)
+    await sequelize.sync({ force: true });
     console.log("Database synchronized successfully.");
     await seedProducts();
   } catch (error) {

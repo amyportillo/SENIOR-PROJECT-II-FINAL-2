@@ -1,1 +1,90 @@
+/* import tailwind css for styling */
 @import "tailwindcss";
+
+/* define custom css variables for colors and effects */
+@layer base {
+  :root {
+    /* purple gradient for main buttons and navbar */
+    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    /* pink gradient for delete buttons */
+    --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    /* blue gradient for edit/update buttons */
+    --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    /* dark gradient for headers */
+    --gradient-dark: linear-gradient(135deg, #2d3561 0%, #1e1e2e 100%);
+    /* nice shadow effects for cards */
+    --shadow-lg: 0 20px 60px -15px rgba(0, 0, 0, 0.3);
+    --shadow-xl: 0 30px 80px -20px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* create reusable css classes */
+@layer utilities {
+  /* purple gradient class */
+  .gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+  
+  /* pink gradient class */
+  .gradient-secondary {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  }
+  
+  /* blue gradient class */
+  .gradient-success {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  }
+  
+  /* dark gradient class */
+  .gradient-dark {
+    background: linear-gradient(135deg, #2d3561 0%, #1e1e2e 100%);
+  }
+  
+  /* frosted glass effect for modern look */
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  /* floating animation for decorative elements */
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  /* glowing animation for highlights */
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+  
+  /* smooth hover effect for cards */
+  .card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* make cards lift up on hover */
+  .card-hover:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* animation that makes elements float up and down */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* animation that makes elements glow in and out */
+@keyframes glow {
+  from {
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+  }
+  to {
+    box-shadow: 0 0 30px rgba(102, 126, 234, 0.8), 0 0 40px rgba(102, 126, 234, 0.6);
+  }
+}

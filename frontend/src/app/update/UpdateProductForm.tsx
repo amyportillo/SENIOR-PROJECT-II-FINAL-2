@@ -10,8 +10,6 @@ type UpdateProductFormProps = {
   onCancel?: () => void;
 };
 
-const INPUT_CLASS = "w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm";
-
 export default function UpdateProductForm({ productId, onProductUpdated, onCancel }: UpdateProductFormProps) {
   const [formData, setFormData] = useState<ProductFormData>({
     name: "",
@@ -112,65 +110,213 @@ export default function UpdateProductForm({ productId, onProductUpdated, onCance
 
   if (isLoading) {
     return (
-      <div className="p-6 bg-white rounded-lg shadow-md border border-gray-200">
-        <p className="text-gray-600">Loading product...</p>
+      <div className="bg-white rounded-3xl shadow-2xl p-12 text-center">
+        <div className="inline-block w-16 h-16 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin mb-4"></div>
+        <p className="text-gray-600 text-lg font-medium">Loading product...</p>
       </div>
     );
   }
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md border border-gray-200">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">Update Product</h2>
+    <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 max-w-2xl mx-auto">
+      {/* Header */}
+      <div className="gradient-success p-6 relative overflow-hidden flex justify-between items-center">
+        <div className="relative z-10 flex items-center gap-3">
+          <div className="p-3 bg-white/20 backdrop-blur-lg rounded-xl">
+            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+          </div>
+          <div>
+            <h2 className="text-3xl font-extrabold text-white">Update Product</h2>
+            <p className="text-white/80 text-sm">Modify product details</p>
+          </div>
+        </div>
+        
         {onCancel && (
-          <button onClick={onCancel} className="text-gray-500 hover:text-gray-700 text-2xl">
-            ✕
+          <button
+            onClick={onCancel}
+            className="relative z-10 p-2 bg-white/20 hover:bg-white/30 backdrop-blur-lg rounded-xl text-white hover:scale-110 transition-all duration-300"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
           </button>
         )}
+        
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute w-48 h-48 bg-white rounded-full -top-24 -right-24"></div>
+        </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium mb-1 text-gray-700">Name *</label>
-          <input type="text" name="name" value={formData.name} onChange={handleChange} className={INPUT_CLASS} placeholder="Product name" required />
+      {/* Form */}
+      <form onSubmit={handleSubmit} className="p-8 space-y-6">
+        {/* Name Field */}
+        <div className="group">
+          <label className="block text-sm font-bold mb-2 text-gray-700 flex items-center gap-2">
+            <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+            </svg>
+            Product Name *
+          </label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            className="w-full px-5 py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all duration-300 font-medium"
+            placeholder="Enter product name"
+            required
+          />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium mb-1 text-gray-700">Price *</label>
-          <input type="number" name="price" value={formData.price} onChange={handleChange} step="0.01" min="0" className={INPUT_CLASS} placeholder="0.00" required />
+        {/* Price and Category Row */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="group">
+            <label className="block text-sm font-bold mb-2 text-gray-700 flex items-center gap-2">
+              <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Price *
+            </label>
+            <input
+              type="number"
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
+              step="0.01"
+              min="0"
+              className="w-full px-5 py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all duration-300 font-medium"
+              placeholder="0.00"
+              required
+            />
+          </div>
+
+          <div className="group">
+            <label className="block text-sm font-bold mb-2 text-gray-700 flex items-center gap-2">
+              <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+              </svg>
+              Category *
+            </label>
+            <input
+              type="text"
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              className="w-full px-5 py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all duration-300 font-medium"
+              placeholder="e.g., Electronics"
+              required
+            />
+          </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium mb-1 text-gray-700">Category *</label>
-          <input type="text" name="category" value={formData.category} onChange={handleChange} className={INPUT_CLASS} placeholder="e.g., electronics" required />
+        {/* Description Field */}
+        <div className="group">
+          <label className="block text-sm font-bold mb-2 text-gray-700 flex items-center gap-2">
+            <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Description *
+          </label>
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            rows={4}
+            className="w-full px-5 py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all duration-300 font-medium resize-none"
+            placeholder="Describe your product..."
+            required
+          />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium mb-1 text-gray-700">Description *</label>
-          <textarea name="description" value={formData.description} onChange={handleChange} rows={4} className={INPUT_CLASS} placeholder="Product description" required />
+        {/* Image Upload */}
+        <div className="group">
+          <label className="block text-sm font-bold mb-2 text-gray-700 flex items-center gap-2">
+            <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            Update Image (Optional)
+          </label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="w-full px-5 py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all duration-300 font-medium file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 file:cursor-pointer"
+          />
+          <p className="text-xs text-gray-500 mt-2">Leave empty to keep current image</p>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium mb-1 text-gray-700">Image</label>
-          <input type="file" accept="image/*" onChange={handleImageChange} className={INPUT_CLASS} />
-          <p className="text-xs text-gray-500 mt-1">Leave empty to keep current image</p>
-        </div>
-
+        {/* Image Preview */}
         {(imagePreview || currentImageUrl) && (
-          <div>
-            <p className="text-sm font-medium mb-2 text-gray-700">{imagePreview ? "New Image Preview:" : "Current Image:"}</p>
-            <img src={imagePreview || currentImageUrl} alt="Preview" className="w-full h-48 object-contain border border-gray-300 rounded-md bg-gray-50" />
+          <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-6 border-2 border-blue-100">
+            <p className="text-sm font-bold mb-3 text-gray-700 flex items-center gap-2">
+              <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+              {imagePreview ? "New Image Preview" : "Current Image"}
+            </p>
+            <div className="relative rounded-2xl overflow-hidden shadow-xl">
+              <img src={imagePreview || currentImageUrl} alt="Preview" className="w-full h-64 object-contain bg-white" />
+            </div>
           </div>
         )}
 
-        {message && <div className={`p-3 rounded-md text-sm ${message.type === "success" ? "bg-green-50 text-green-800 border border-green-200" : "bg-red-50 text-red-800 border border-red-200"}`}>{message.text}</div>}
+        {/* Message */}
+        {message && (
+          <div
+            className={`p-5 rounded-2xl text-sm font-semibold flex items-center gap-3 ${
+              message.type === "success"
+                ? "gradient-success text-white shadow-lg"
+                : "gradient-secondary text-white shadow-lg"
+            }`}
+          >
+            {message.type === "success" ? (
+              <svg className="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            ) : (
+              <svg className="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            )}
+            {message.text}
+          </div>
+        )}
 
-        <div className="flex gap-3">
-          <button type="submit" disabled={!isFormValid() || isSubmitting} className={`flex-1 py-3 rounded-md font-semibold text-white transition-colors ${!isFormValid() || isSubmitting ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 active:bg-blue-800"}`}>
-            {isSubmitting ? "Updating..." : "Update Product"}
+        {/* Action Buttons */}
+        <div className="flex gap-4">
+          <button
+            type="submit"
+            disabled={!isFormValid() || isSubmitting}
+            className={`flex-1 py-5 rounded-2xl font-bold text-white text-lg transition-all duration-300 flex items-center justify-center gap-3 shadow-lg ${
+              !isFormValid() || isSubmitting
+                ? "bg-gray-300 cursor-not-allowed"
+                : "gradient-success hover:shadow-2xl hover:scale-105 active:scale-95"
+            }`}
+          >
+            {isSubmitting ? (
+              <>
+                <div className="w-6 h-6 border-3 border-white border-t-transparent rounded-full animate-spin"></div>
+                Updating...
+              </>
+            ) : (
+              <>
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                Update Product
+              </>
+            )}
           </button>
+          
           {onCancel && (
-            <button type="button" onClick={onCancel} className="px-6 py-3 rounded-md font-semibold text-gray-700 bg-gray-200 hover:bg-gray-300 transition-colors">
+            <button
+              type="button"
+              onClick={onCancel}
+              className="px-8 py-5 rounded-2xl font-bold text-gray-700 bg-gray-200 hover:bg-gray-300 transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg"
+            >
               Cancel
             </button>
           )}

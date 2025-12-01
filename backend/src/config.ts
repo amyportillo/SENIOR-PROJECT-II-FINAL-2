@@ -8,7 +8,7 @@ interface Config {
 }
 
 const config: Config = {
-  port: Number(process.env.PORT) || 5000,
+  port: Number(process.env.PORT) || 5001,
   dbUri: process.env.DATABASE_URL || "sqlite::memory:",
   nodeEnv: process.env.NODE_ENV || "development",
   clientUrl: process.env.CLIENT_URL || "http://localhost:3000",

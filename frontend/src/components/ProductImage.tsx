@@ -7,7 +7,9 @@ type ProductImageProps = {
   className?: string;
 };
 
+// reusable component for displaying product images at different sizes
 export default function ProductImage({ imageUrl, alt, size = "medium", className = "" }: ProductImageProps) {
+  // predefined size configurations
   const sizes = {
     small: { width: 40, height: 40, containerClass: "w-10 h-10" },
     medium: { width: 200, height: 200, containerClass: "w-full h-48" },
@@ -16,6 +18,7 @@ export default function ProductImage({ imageUrl, alt, size = "medium", className
 
   const config = sizes[size];
 
+  // show placeholder if no image url provided
   if (!imageUrl) {
     return (
       <div className={`${config.containerClass} bg-gray-200 flex items-center justify-center text-gray-500 ${className}`}>
@@ -24,5 +27,6 @@ export default function ProductImage({ imageUrl, alt, size = "medium", className
     );
   }
 
+  // render actual image using next.js Image component
   return <Image src={imageUrl} alt={alt} width={config.width} height={config.height} className={`object-contain ${className}`} unoptimized />;
 }
