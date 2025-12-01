@@ -27,10 +27,23 @@ export default function UpdateProductForm({ productId, onProductUpdated, onCance
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`${API_URL}/products/${productId}`);
-        if (!response.ok) throw new Error("Failed to fetch product");
+        console.log(`Fetching product from: ${API_URL}/products/${productId}`);
+        const response = await fetch(`${API_URL}/products/${productId}`, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+          },
+        });
+        
+        console.log('Response status:', response.status);
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('Response error:', errorText);
+          throw new Error(`Failed to fetch product: ${response.status}`);
+        }
 
         const product: Product = await response.json();
+        console.log('Product loaded:', product);
         setFormData({
           name: product.name,
           price: product.price.toString(),
@@ -41,13 +54,15 @@ export default function UpdateProductForm({ productId, onProductUpdated, onCance
         if (product.imageUrl) setCurrentImageUrl(product.imageUrl);
       } catch (error) {
         console.error("Fetch error:", error);
-        setMessage({ type: "error", text: "Failed to load product" });
+        setMessage({ type: "error", text: `Failed to load product: ${error instanceof Error ? error.message : 'Unknown error'}` });
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchProduct();
+    if (productId) {
+      fetchProduct();
+    }
   }, [productId]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

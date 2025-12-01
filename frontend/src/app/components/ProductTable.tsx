@@ -132,7 +132,7 @@ export default function ProductTable() {
                   </td>
                   {/* price with gradient text cell */}
                   <td className="px-6 py-5">
-                    <span className="text-lg font-extrabold gradient-primary bg-clip-text text-transparent">
+                    <span className="text-lg font-extrabold text-purple-600">
                       ${Number(product.price).toFixed(2)}
                     </span>
                   </td>

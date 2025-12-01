@@ -15,6 +15,8 @@ export function useProducts() {
     try {
       const response = await fetch(`${API_URL}/products`);
       const data = await response.json();
+      console.log("Fetched products:", data);
+      console.log("First product imageUrl:", data[0]?.imageUrl);
       setProducts(data);
     } catch (error) {
       console.error("Failed to fetch products:", error);

@@ -76,8 +76,9 @@ async function seedProducts() {
 async function initializeDatabase() {
   try {
     await testConnection();
-    // force: true drops and recreates tables (clean slate each time)
-    await sequelize.sync({ force: true });
+    // alter: true updates tables without dropping data
+    // force: true would drop and recreate (use only in development when needed)
+    await sequelize.sync({ alter: true });
     console.log("Database synchronized successfully.");
     await seedProducts();
   } catch (error) {
